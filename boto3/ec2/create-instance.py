@@ -3,66 +3,18 @@
 import boto3, os
 from botocore.exceptions import ClientError
 
-vpc_id = "vpc-0d42bf2f27be967ff"
-subnet_id = "subnet-00b5ede5e160caa59"
-ami_id = "ami-0ddf424f81ddb0720"
+vpc_id = "vpc-0b8c6da4dc0ee6542"
+subnet_id = "subnet-0a1afc3cc131b5dba"
+security_group_id = "sg-0259bb42f96f33786"
+ami_id = "ami-0a15a308c19bc4970"
 instance_type = "t2.small"
 app_name = "flask"
 
 create_key = True
 key_name = "dev-key"
-key_location = "/Users/bibinwilson/.ssh/devops-class/"
+key_location = "/Users/sures/.ssh/na-bonda/"
 
 ec2 = boto3.client('ec2')
-
-def createSecurityGroup():
-    global security_group_id
-    try:
-        response = ec2.create_security_group(GroupName=app_name + "-sg",
-                                            Description=app_name + " Security Group",
-                                            VpcId=vpc_id,
-                                            TagSpecifications=[
-                                                    {
-                                                        'ResourceType': 'security-group',
-                                                        'Tags': [
-                                                            {
-                                                                'Key': 'Name',
-                                                                'Value': app_name + "-sg"
-                                                            }
-                                                        ]
-                                                    },
-                                                ],
-                                            )
-        security_group_id = response['GroupId']
-        print('Security Group Created %s in vpc %s.' % (security_group_id, vpc_id))
-
-        ingress = ec2.authorize_security_group_ingress(
-                            GroupId=security_group_id,
-                            IpPermissions=[
-                                {
-                                    'IpProtocol': 'tcp',
-                                    'FromPort': 80,
-                                    'ToPort': 80,
-                                    'IpRanges': [
-                                        {
-                                            'CidrIp': '0.0.0.0/0'
-                                        }
-                                    ]
-                                },
-                                {
-                                    'IpProtocol': 'tcp',
-                                    'FromPort': 22,
-                                    'ToPort': 22,
-                                    'IpRanges': [
-                                        {
-                                            'CidrIp': '0.0.0.0/0'
-                                        }
-                                    ]
-                                }
-                            ])
-        print('Ingress Successfully Set %s' % ingress)
-    except ClientError as e:
-        print(e)
 
 def createKeyPair():
 
@@ -124,7 +76,7 @@ def createInstance():
 
 if __name__ == "__main__":
     
-    createSecurityGroup()
+   # createSecurityGroup()
 
     if create_key == True:
         createKeyPair();
