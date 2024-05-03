@@ -17,11 +17,13 @@ response = dynamodb.create_table(
   KeySchema=[
     {
       "AttributeName": "artist",
-      "KeyType": "HASH"
+      "KeyType": "HASH" 
+      #HASH KEYtype represents single primary key or partition key 
     },
     {
       "AttributeName": "song",
       "KeyType": "RANGE"
+      #RANGE or sort key represents composed with HASH KEY Type ,combination of hash key and sort key must be unique.
     }
   ],
   ProvisionedThroughput={

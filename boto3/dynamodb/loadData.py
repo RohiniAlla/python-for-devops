@@ -1,10 +1,10 @@
 import boto3
 import json
 
-dynamodb = boto3.client('dynamodb')
+dynamodb = boto3.client("dynamodb")
 
 def upload():
-    with open('data.json', 'r') as datafile:
+    with open('C:/Users/sures/repos/python-for-devops/boto3/dynamodb/data.json', 'r') as datafile:
         records = json.load(datafile)
     for song in records:
         print(song)

@@ -5,10 +5,10 @@ from boto3.dynamodb.conditions import Key
 TABLE_NAME = "basicSongsTable"
 
 # Creating the DynamoDB Client
-dynamodb_client = boto3.client('dynamodb', region_name="us-west-2")
+dynamodb_client = boto3.client('dynamodb', region_name="us-west-1")
 
 # Creating the DynamoDB Table Resource
-dynamodb = boto3.resource('dynamodb', region_name="us-west-2")
+dynamodb = boto3.resource('dynamodb', region_name="us-west-1")
 table = dynamodb.Table(TABLE_NAME)
 
 
@@ -16,11 +16,11 @@ artists = table.scan(AttributesToGet=['artist.'])
 
 
 specific_artist = table.query(
-  KeyConditionExpression=Key('artist').eq('Arturus Ardvarkian')
+  KeyConditionExpression=Key('artist').eq('Rohini Alla')
 )
 
 artists_object = json.dumps(artists, indent = 4) 
-print(artists_object)
+#print(artists_object)
 
 specific_artist = json.dumps(specific_artist, indent = 4) 
 print(specific_artist)
